@@ -22,6 +22,7 @@ class HackerRankURL
   def getSecretWord()
     return @document.css("font")[0].content
   rescue
+    return ""
   end
 
   def getURL()
@@ -33,7 +34,9 @@ end
 def transverse(web)
   if !@links.include? web.getURL
     @links.add web.getURL
-    @secretsWords.add web.getSecretWord
+    unless web.getSecretWord.empty?
+      @secretsWords.add web.getSecretWord
+    end
     web.getLinks.each{|a| transverse(HackerRankURL.new(a.content))}
   end
 end
